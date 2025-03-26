@@ -1,0 +1,29 @@
+
+/* --- Styles --- */
+body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; background-color: #f0f0f0; }
+#container { width: 100vw; height: 100vh; display: block; cursor: default; }
+#container.placing { cursor: crosshair; }
+#container.moving { cursor: grabbing; }
+#info { position: absolute; top: 10px; left: 10px; z-index: 100; background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); max-width: 300px; max-height: 90vh; display: flex; flex-direction: column; }
+#info h1, #info h2 { margin: 0 0 10px 0; font-size: 1.1em; text-align: center; color: #333; }
+#info h2 { font-size: 1.0em; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; }
+.template-selector { margin-bottom: 10px; overflow-y: auto; max-height: 25vh; /* Adjusted height */ }
+.template-item { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 5px; cursor: pointer; transition: background-color 0.2s, border-color 0.2s; font-size: 0.9em; }
+.template-item:hover { background-color: #e0e0e0; }
+.template-item.selected { background-color: #aed581; border-color: #7cb342; font-weight: bold; }
+.template-item span { font-size: 0.85em; color: #555; display: block; margin-top: 2px; }
+#placedHousesListContainer { margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; flex-grow: 1; overflow-y: auto; max-height: 25vh; /* Adjusted height */ }
+.placed-item { padding: 6px 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 5px; cursor: pointer; font-size: 0.9em; display: flex; justify-content: space-between; align-items: center; }
+.placed-item:hover { background-color: #f0f0f0; }
+.placed-item.selected { background-color: #bbdefb; border-color: #64b5f6; font-weight: bold; }
+.placed-item .placed-name { font-size: 0.95em; }
+.placed-item .placed-id { font-size: 0.75em; color: #888; margin-left: 5px;}
+.placed-item .status-indicator { font-size: 0.8em; color: #777; font-style: italic; white-space: nowrap; margin-left: 10px;}
+.action-buttons { margin-top: 10px; }
+button { padding: 8px 10px; font-size: 14px; cursor: pointer; border: none; border-radius: 5px; color: white; transition: background-color 0.2s; margin-top: 5px; width: 100%; }
+button#cancelBtn { display: none; background-color: #ff9800; }
+button#unbuildSelectedBtn { display: none; background-color: #f44336; }
+button#rotateSelectedBtn { display: none; background-color: #2196F3; } /* Blue color */
+button:disabled { background-color: #cccccc !important; cursor: not-allowed; opacity: 0.7; }
+button:not(:disabled):hover { filter: brightness(110%); }
+#status { margin-top: 15px; font-style: italic; color: #555; font-size: 0.9em; text-align: center; border-top: 1px solid #eee; padding-top: 10px; min-height: 3em; }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lego Town Builder - Refactored</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- UI Panel -->
+    <div id="info">
+        <h1>Building Templates</h1>
+        <div id="templateSelector" class="template-selector"></div>
+        <div class="action-buttons">
+             <button id="cancelBtn">Cancel Placement</button>
+             <button id="rotateSelectedBtn">Rotate 90°</button>
+             <button id="unbuildSelectedBtn">Unbuild Selected</button>
+        </div>
+        <div id="placedHousesListContainer">
+             <h2>Placed Buildings</h2>
+             <div id="placedHousesList"></div>
+        </div>
+        <div id="status">Select a template to place, or click a building to select/move.</div>
+    </div>
+
+    <!-- Three.js Canvas Container -->
+    <div id="container"></div>
+
+    <!-- Libraries (Consider hosting locally or using a bundler later) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+
+    <!-- Main Application Script (Module) -->
+    <!-- IMPORTANT: type="module" enables import/export -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
