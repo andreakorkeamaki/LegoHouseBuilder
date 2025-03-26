@@ -21,6 +21,12 @@ export const appState = {
     isDragging: false,
     dragInstanceId: null,
     mouse: new THREE.Vector2(), // Normalized device coordinates
+    
+    // Mobile-specific state
+    lastMoveTime: null,         // For throttling move events on mobile
+    lastTapTime: null,          // For detecting double taps
+    lastTapId: null,            // For detecting double taps on the same object
+    isMobileView: false,        // Set by mobile detection
 
     // DOM Elements (initialized in main.js)
     ui: {

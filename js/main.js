@@ -12,6 +12,7 @@ import * as LEGO_UTILS from './legoUtils.js';
 import * as UI from './ui.js';
 import * as INTERACTIONS from './interactions.js';
 import * as SELECTION from './selection.js'; // Might only need specific functions
+import { initMobileUI, initTouchInteractions, isMobileDevice } from './mobile.js';
 
 // --- Initialization ---
 function init() {
@@ -43,6 +44,15 @@ function init() {
     UI.updatePlacedHousesUI();
     UI.updateActionButtons();
     UI.updateStatusText('Select a template or click a building/list item.');
+
+    // Initialize mobile-specific UI and interactions
+    initMobileUI();
+    if (isMobileDevice()) {
+        initTouchInteractions();
+        // Adjust camera for mobile
+        appState.camera.position.set(0, 200, 200); // Higher position for better overview on mobile
+        appState.controls.update();
+    }
 
     // Setup Event Listeners
     window.addEventListener('resize', onWindowResize, false);

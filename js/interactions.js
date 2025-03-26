@@ -6,12 +6,18 @@ import { selectTemplateByItemKey, cancelPlacementSelection, selectPlacedHouseByI
 import { placeBuildingAction, moveBuildingAction, rotateBuildingAction, unbuildBuildingAction } from './actions.js';
 import { updateStatusText, setContainerCursor, uiElements } from './ui.js';
 import * as C from './constants.js'; // Import constants if needed here
+import { isMobileDevice } from './mobile.js';
 
 
 // --- Event Handlers ---
 
 export function handlePointerDown(event) {
     if (appState.isAnyAnimationRunning()) return; // Prevent interaction during animations
+
+    // For mobile devices, check if the click is on the UI panel and if so, don't process 3D interactions
+    if (isMobileDevice() && isClickOnUIPanel(event)) {
+        return;
+    }
 
     updateMouseCoords(event); // Update appState.mouse
     appState.raycaster.setFromCamera(appState.mouse, appState.camera);
@@ -76,6 +82,17 @@ export function handlePointerDown(event) {
 }
 
 export function handlePointerMove(event) {
+    // For mobile devices, add a small delay to prevent jittery movement
+    if (isMobileDevice() && appState.isDragging && !appState.lastMoveTime) {
+        appState.lastMoveTime = Date.now();
+    }
+    
+    if (isMobileDevice() && appState.isDragging && Date.now() - appState.lastMoveTime < 16) {
+        return; // Throttle move events on mobile
+    }
+    
+    appState.lastMoveTime = Date.now();
+    
     if (!appState.isDragging || !appState.dragInstanceId) return; // Only if dragging
 
     updateMouseCoords(event);
@@ -107,6 +124,9 @@ export function handlePointerMove(event) {
 }
 
 export function handlePointerUp(event) {
+    // Reset the move time tracker
+    appState.lastMoveTime = null;
+    
     if (appState.isDragging && appState.dragInstanceId) {
         console.log(`Interaction: Pointer Up during drag for ${appState.dragInstanceId}`);
         const instance = appState.placedHouses[appState.dragInstanceId];
@@ -178,4 +198,25 @@ function updateMouseCoords(event) {
     const rect = uiElements.container.getBoundingClientRect(); // Use stored element
     appState.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     appState.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+}
+
+// Check if a click event is on the UI panel
+function isClickOnUIPanel(event) {
+    const infoPanel = document.getElementById('info');
+    const rect = infoPanel.getBoundingClientRect();
+    
+    return (
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom
+    );
+}
+
+// Add a double tap handler for mobile devices
+export function handleDoubleTap(instanceId) {
+    if (appState.selectedInstanceId === instanceId) {
+        // Double tap on selected building - rotate it
+        rotateBuildingAction(instanceId);
+    }
 }
